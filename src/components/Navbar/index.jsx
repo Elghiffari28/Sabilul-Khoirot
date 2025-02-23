@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 import Navigation from "./Navigation";
@@ -13,11 +13,12 @@ import { UseUser } from "@/context/UserContext";
 const Navbar = () => {
   const { user, setUser } = UseUser("");
   const [isOpen, setIsOpen] = useState(false);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const isAdminRoute = pathname.startsWith("/admin");
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+  const isAdminRoute = pathname.startsWith("/admin");
   if (isAdminRoute) return null;
 
   const handleLogout = async () => {
@@ -66,9 +67,12 @@ const Navbar = () => {
                   height={350}
                   priority
                 />
-                <h1 className="text-dark font-semibold text-xl md:text-2xl">
+                <Link
+                  href={"/dashboard"}
+                  className="text-dark font-semibold text-xl md:text-2xl md:hidden lg:block"
+                >
                   RA SABILUL KHOIROT
-                </h1>
+                </Link>
               </div>
               <div className="hidden md:block">
                 <Navigation />
@@ -107,7 +111,7 @@ const Navbar = () => {
                     ) : (
                       <Link
                         href="/"
-                        className="px-2 py-1 bg-bg_secondary text-black font-medium rounded-lg shadow-lg flex"
+                        className="px-2 py-1 bg-bg_secondary border-2 border-black text-black font-medium rounded-lg shadow-lg flex"
                       >
                         <span className="mr-2">Login</span>
                         <SignIn size={24} />
@@ -135,7 +139,7 @@ const Navbar = () => {
                     >
                       {/* <!-- Active: "bg-gray-100 outline-none", Not Active: "" --> */}
                       <Link
-                        href="/profile"
+                        href="/profile-user"
                         className="block px-4 py-2 text-sm text-dark hover:bg-bg_secondary rounded-md"
                         role="menuitem"
                         tabIndex="-1"
@@ -293,9 +297,10 @@ const Navbar = () => {
                 <Link
                   onClick={() => setIsMobileMenuOpen(false)}
                   href="/"
-                  className="block w-20 mb-4  px-3 py-2 text-base rounded-lg shadow-lg font-medium text-black hover:bg-gray-700 hover:text-white text-center bg-white"
+                  className="w-auto mb-4  px-3 py-2 text-base rounded-lg shadow-lg font-medium text-black hover:bg-gray-700 hover:text-white text-center bg-white flex"
                 >
-                  Login
+                  <span className="mr-2">Login</span>
+                  <SignIn size={24} />
                 </Link>
               </div>
             )}

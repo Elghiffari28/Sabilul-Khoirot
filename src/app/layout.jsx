@@ -4,6 +4,9 @@ import Navbar from "@/components/Navbar";
 import { User } from "@phosphor-icons/react/dist/ssr";
 import { UserProvider } from "@/context/UserContext";
 import Footer from "@/components/Footer";
+import "remixicon/fonts/remixicon.css";
+import { Toaster } from "@/components/ui/toaster";
+import Header from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +34,9 @@ export default function RootLayout({ children }) {
       <body className={`${geistMono.className} antialiased bg-bg_primary`}>
         <UserProvider>
           <Navbar />
+          <Header />
           <main className="min-h-screen">{children}</main>
+          <Toaster />
           <Footer />
         </UserProvider>
       </body>

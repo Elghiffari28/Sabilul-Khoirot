@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginUser } from "@/lib/api";
 import { UseUser } from "@/context/UserContext";
+import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 
 const Login = () => {
@@ -11,10 +12,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const Auth = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
     // console.log(email, password);
     try {
       const data = await LoginUser({ email, password });
@@ -27,9 +31,22 @@ const Login = () => {
         setUser(data?.message);
         router.push("/dashboard");
       }
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay 2 detik
+      toast({
+        title: "Login Berhasil",
+        description: `Selamat datang ${data?.message.name}!`,
+      });
+      // alert("Login berhasil!");
       // console.log(data.message.name);
     } catch (error) {
       setError(error.message || "Ada Yang salah");
+      toast({
+        variant: "destructive",
+        title: "Login Gagal",
+        description: `Coba periksa kembali`,
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,7 +85,7 @@ const Login = () => {
                 <div>
                   <label htmlFor="email"></label>
                   <input
-                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2"
+                    className="bg-gray-200 border border-gray-300 text-gray-900 rounded-lg block w-full p-2"
                     type="email"
                     name="email"
                     id="email"
@@ -82,7 +99,7 @@ const Login = () => {
                 <div>
                   <label htmlFor="password"></label>
                   <input
-                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2"
+                    className="bg-gray-200 border border-gray-300 text-gray-900 rounded-lg block w-full p-2"
                     type="password"
                     name="password"
                     autoComplete="current-password"
@@ -96,8 +113,17 @@ const Login = () => {
                 <button
                   type="submit"
                   className="text-gray-900 w-full font-medium text-sm px-5 py-3 text-center bg-bg_secondary rounded-lg shadow-lg"
+                  disabled={isLoading}
                 >
-                  Login
+                  {isLoading ? (
+                    <>
+                      <div className="flex justify-center items-center p-1">
+                        <div className="login-loader"></div>
+                      </div>
+                    </>
+                  ) : (
+                    "Login"
+                  )}
                 </button>
               </form>
             </div>

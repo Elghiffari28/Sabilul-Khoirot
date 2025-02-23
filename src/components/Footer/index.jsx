@@ -1,7 +1,15 @@
+"use client";
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith("/admin");
+  if (isAdminRoute) return null;
+
+  const date = new Date();
+  const year = date.getFullYear();
   return (
     <div>
       <footer className="relative bg-bg_secondary pt-8 pb-6">
@@ -128,20 +136,14 @@ const Footer = () => {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4 mx-auto text-center">
               <div className="text-sm text-blueGray-500 font-semibold py-1">
-                Copyright © <span id="get-current-year">2021</span>
+                Copyright © <span id="get-current-year">{year}</span>
+                <span className="text-blueGray-500"> RA Sabilul Khoirot</span>
+                <span> | Developed By </span>
                 <Link
-                  href="https://www.creative-tim.com/product/notus-js"
+                  href="www.linkedin.com/in/elba-ghiffari-fitrasina"
                   className="text-blueGray-500 hover:text-gray-800"
-                  target="_blank"
                 >
-                  {" "}
-                  Notus JS by
-                </Link>
-                <Link
-                  href="https://www.creative-tim.com?ref=njs-profile"
-                  className="text-blueGray-500 hover:text-blueGray-800"
-                >
-                  Creative Tim
+                  <span>Elghiffari</span>
                 </Link>
                 .
               </div>
