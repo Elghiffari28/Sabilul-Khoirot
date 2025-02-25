@@ -112,6 +112,7 @@ const page = () => {
               multiple
               onChange={handleFileChange}
             />
+            <p className="text-red-500">Maks 5 Gambar</p>
           </div>
           <div className="flex mt-4 space-x-2">
             {preview.map((src, index) => (
