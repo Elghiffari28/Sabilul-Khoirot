@@ -6,7 +6,8 @@ import { UserProvider } from "@/context/UserContext";
 import Footer from "@/components/Footer";
 import "remixicon/fonts/remixicon.css";
 import { Toaster } from "@/components/ui/toaster";
-import Header from "@/components/Header";
+import Header from "@/components/CurrentTime";
+import CurrentTime from "@/components/CurrentTime";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistMono.className} antialiased bg-bg_primary`}>
         <UserProvider>
           <Navbar />
-          <Header />
+          <CurrentTime />
           <main className="min-h-screen">{children}</main>
           <Toaster />
           <Footer />

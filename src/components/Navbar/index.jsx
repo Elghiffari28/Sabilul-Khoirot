@@ -5,10 +5,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Navigation from "./Navigation";
 import { usePathname, useRouter } from "next/navigation";
-import { getMe } from "@/lib/api";
+import CurrentTime from "@/components/CurrentTime";
 import Link from "next/link";
 import { SignIn, SignOut } from "@phosphor-icons/react";
 import { UseUser } from "@/context/UserContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const { user, setUser } = UseUser("");
@@ -19,6 +20,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
   const isAdminRoute = pathname.startsWith("/admin");
+  const { toast } = useToast();
   if (isAdminRoute) return null;
 
   const handleLogout = async () => {
@@ -35,6 +37,9 @@ const Navbar = () => {
         const data = await response.json();
         console.log(data);
         if (data) {
+          toast({
+            description: "Logout Berhasil",
+          });
           console.log("Logout berhasil");
           localStorage.removeItem("user");
           setUser(null);

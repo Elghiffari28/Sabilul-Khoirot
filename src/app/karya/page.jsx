@@ -1,21 +1,18 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { UseUser } from "@/context/UserContext";
-import { getAllBerita } from "@/lib/berita";
+import { getAllKarya } from "@/lib/karya";
 
-const Page = () => {
-  const { user, setUser } = UseUser();
-  const [berita, setBerita] = useState({});
+const page = () => {
+  const [karya, setKarya] = useState({});
   const imageURL = process.env.NEXT_PUBLIC_IMAGE_URL;
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllBerita();
-        console.log("Ini adalah data berita", data);
-        setBerita(data);
+        const data = await getAllKarya();
+        console.log("ini data karya", data);
+        setKarya(data);
       } catch (error) {
         console.error(error);
       }
@@ -26,26 +23,23 @@ const Page = () => {
 
   return (
     <div className="p-12">
-      <h1 className="text-xl font-bold mb-4">Berita</h1>
-      <div className="flex justify-start mb-5">
-        {user ? (
-          <Link
-            href={"/news/add"}
-            className="p-2 bg-bg_secondary rounded-md shadow-md mb-5"
-          >
-            <span>Tambah Berita</span>
-          </Link>
-        ) : null}
+      <div className="mb-5 flex justify-end">
+        <Link
+          href={"/karya/add"}
+          className="p-2 bg-bg_secondary rounded-md shadow-md"
+        >
+          Tambah Karyamu Disini
+        </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        {berita?.payload?.length > 0 ? (
-          berita?.payload?.map((item) => (
+        {karya?.payload?.length > 0 ? (
+          karya?.payload?.map((item) => (
             <div
               key={item.uuid}
-              className="max-w-sm h-[500px] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+              className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
             >
               <Image
-                src={`${imageURL}/${item.file[0]}`}
+                src={`${imageURL}/${item.file}`}
                 width={100}
                 height={100}
                 alt="Gambar Karya"
@@ -54,13 +48,13 @@ const Page = () => {
               />
 
               <div className="p-5">
-                <Link href={`/news/${item.uuid}`}>
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white truncate hover:text-clip">
+                <Link href={`/karya/${item.uuid}`}>
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     {item.judul}
                   </h5>
                 </Link>
                 <Link
-                  href={`/news/${item.uuid}`}
+                  href={`/karya/${item.uuid}`}
                   className="inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-bg_secondary rounded-md"
                 >
                   Detail
@@ -91,4 +85,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;

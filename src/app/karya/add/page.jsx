@@ -1,15 +1,13 @@
 "use client";
-import { UseUser } from "@/context/UserContext";
-import { createBerita } from "@/lib/berita";
-import React from "react";
-import { useState } from "react";
+import { createKarya } from "@/lib/karya";
+import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  const { user, setUser } = UseUser();
+  const [author, setAuthor] = useState("");
+  const [deskripsi, setDeskripsi] = useState("");
   const [judul, setJudul] = useState("");
-  const [isi, setIsi] = useState("");
   const [files, setFiles] = useState([]);
   const [preview, setPreview] = useState([]);
   const { toast } = useToast();
@@ -23,36 +21,38 @@ const page = () => {
     const previews = selectedFiles.map((file) => URL.createObjectURL(file));
     setPreview(previews);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("judul", judul);
-    formData.append("deskripsi", isi);
-    formData.append("userId", user.id);
+    formData.append("deskripsi", deskripsi);
+    formData.append("author", author);
 
     files.forEach((file, index) => {
       formData.append("file", file);
     });
 
     try {
-      const data = await createBerita(formData);
+      const data = await createKarya(formData);
       console.log("Response: ", data);
       toast({
-        description: "Berita berhasil ditambahkan",
+        description: "Karya berhasil ditambahkan",
       });
 
       // Reset form
       setJudul("");
-      setIsi("");
+      setAuthor("");
+      setDeskripsi("");
       setFiles([]);
       setPreview([]);
-      router.push("/news");
+      router.push("/karya");
     } catch (error) {
       console.error("Error: ", error);
       toast({
         variant: "destructive",
-        description: "Berita gagal ditambahkan",
+        description: "Karya gagal ditambahkan",
       });
     }
   };
@@ -65,7 +65,24 @@ const page = () => {
               htmlFor="title"
               className="block text-lg font-medium text-gray-800 mb-1"
             >
-              Title
+              Nama
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="title"
+              className="block text-lg font-medium text-gray-800 mb-1"
+            >
+              Judul
             </label>
             <input
               type="text"
@@ -83,15 +100,15 @@ const page = () => {
               htmlFor="content"
               className="block text-lg font-medium text-gray-800 mb-1"
             >
-              Content
+              Deskripsi
             </label>
             <textarea
               id="content"
               name="content"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               rows="6"
-              value={isi}
-              onChange={(e) => setIsi(e.target.value)}
+              value={deskripsi}
+              onChange={(e) => setDeskripsi(e.target.value)}
               required
             ></textarea>
           </div>

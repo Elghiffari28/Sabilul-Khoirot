@@ -12,10 +12,14 @@ import {
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import { UseUser } from "@/context/UserContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Sidebar = () => {
+  const { user, setUser } = UseUser();
   const router = useRouter();
   const ADMIN_PREFIX = "/admin";
+  const { toast } = useToast();
 
   const handleLogout = async () => {
     try {
@@ -30,7 +34,12 @@ const Sidebar = () => {
       const data = await response.json();
       console.log(data);
       if (data) {
+        toast({
+          description: "Logout Berhasil",
+        });
         console.log("Logout berhasil");
+        localStorage.removeItem("user");
+        setUser(null);
         router.push("/");
       } else {
         console.log("Logout gagal");

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { LoginUser } from "@/lib/api";
 import { UseUser } from "@/context/UserContext";
@@ -15,11 +15,22 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  useEffect(() => {
+    if (user) {
+      if (user.role === "admin") {
+        router.replace("/admin/dashboard");
+      } else {
+        router.replace("/dashboard");
+      }
+    }
+  }, [user, router]);
+
   const Auth = async (e) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
     // console.log(email, password);
+
     try {
       const data = await LoginUser({ email, password });
       if (data?.message.name === "admin") {

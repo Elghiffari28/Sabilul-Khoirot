@@ -63,7 +63,7 @@ export const apiRequest = async (endpoint, method = "GET", body = null) => {
     }
     // console.log(`${BASE_URL}/${endpoint}`);
     const response = await fetch(`${BASE_URL}/${endpoint}`, options);
-    console.log("ini adalah response", response.text);
+    // console.log("ini adalah response", response.text);
     if (!response.ok) {
       console.log(`Error ${method} ${endpoint}: ${response.statusText}`);
     }
