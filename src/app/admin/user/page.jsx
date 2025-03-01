@@ -27,6 +27,9 @@ const page = () => {
   };
 
   console.log(dataUser);
+  if (!dataUser) {
+    return <p>Forbidden</p>;
+  }
 
   return (
     <div>

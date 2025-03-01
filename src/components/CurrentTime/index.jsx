@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = () => {
+const CurrentTime = () => {
   const options = {
     weekday: "long",
     year: "numeric",
@@ -12,7 +12,7 @@ const Header = () => {
   const jam = now.toLocaleTimeString("id-ID");
   return (
     <div className="flex whitespace-nowrap w-full py-1 bg-yellow-500 text-black justify-center">
-      <div className="">
+      <div className="text-xs md:text-base">
         <div>
           <span> Tanggal/Waktu : </span>
           <span>{tanggal} </span>
@@ -25,4 +25,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default CurrentTime;

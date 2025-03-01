@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllKarya } from "@/lib/karya";
+import Header from "@/components/Header";
 
 const page = () => {
   const [karya, setKarya] = useState({});
@@ -22,8 +23,12 @@ const page = () => {
   }, []);
 
   return (
-    <div className="p-12">
-      <div className="mb-5 flex justify-end">
+    <div>
+      <Header
+        judul={"Karya Siswa"}
+        deskripsi={"Kumpulan karya siswa RA Sabilul Khoirot"}
+      />
+      <div className="mb-5 flex justify-center md:justify-end">
         <Link
           href={"/karya/add"}
           className="p-2 bg-bg_secondary rounded-md shadow-md"

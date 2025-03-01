@@ -5,6 +5,7 @@ import { LoginUser } from "@/lib/api";
 import { UseUser } from "@/context/UserContext";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const { user, setUser } = UseUser();
@@ -35,10 +36,14 @@ const Login = () => {
       const data = await LoginUser({ email, password });
       if (data?.message.name === "admin") {
         localStorage.setItem("user", data?.message);
+        sessionStorage.setItem("user", data?.message);
+        Cookies.set("role", data?.message?.role);
         setUser(data?.message);
         router.push("/admin/dashboard");
       } else {
         localStorage.setItem("user", data?.message);
+        sessionStorage.setItem("user", data?.message);
+        Cookies.set("role", data?.message?.role);
         setUser(data?.message);
         router.push("/dashboard");
       }

@@ -3,9 +3,23 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { getMe } from "@/lib/api";
 import { UseUser } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { user, setUser } = UseUser();
+  // const Me = async () => {
+  //   try {
+  //     const data = await getMe();
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   Me();
+  // }, []);
+  const router = useRouter();
 
   const now = new Date();
   const tanggal = now.toLocaleDateString("id-ID");

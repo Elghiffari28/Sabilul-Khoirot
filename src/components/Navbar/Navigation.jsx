@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,9 +34,10 @@ const Navigation = () => {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className=" rounded-md px-3 py-2 text-sm font-medium text-dark  hover:bg-bg_primary"
+          className="flex items-center justify-between w-full rounded-md px-3 py-2 text-sm font-medium text-dark  hover:bg-bg_primary fle"
         >
-          Profile RA ▼
+          <span>Profile RA</span>
+          {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>
         {isOpen && (
           <div className="absolute p-2 top-full w-36  rounded-md shadow-2xl  bg-bg_secondary ">
@@ -79,12 +81,12 @@ const Navigation = () => {
       >
         Berita
       </Link>
-      <a
-        href="/contact"
+      <Link
+        href="/kontak"
         className="rounded-md px-3 py-2 text-sm font-medium text-dark  hover:bg-bg_primary"
       >
         Kontak
-      </a>
+      </Link>
     </div>
   );
 };

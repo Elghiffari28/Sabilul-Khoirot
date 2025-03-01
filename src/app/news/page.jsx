@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { UseUser } from "@/context/UserContext";
 import { getAllBerita } from "@/lib/berita";
+import Header from "@/components/Header";
 
 const Page = () => {
   const { user, setUser } = UseUser();
@@ -25,8 +26,11 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="p-12">
-      <h1 className="text-xl font-bold mb-4">Berita</h1>
+    <div>
+      <Header
+        judul={"Berita"}
+        deskripsi={"Berita seputar RA Sabilul Khoirot"}
+      />
       <div className="flex justify-start mb-5">
         {user ? (
           <Link
@@ -84,7 +88,7 @@ const Page = () => {
             </div>
           ))
         ) : (
-          <p>Tidak ada Karya tersedia</p>
+          <p>Tidak ada Berita tersedia</p>
         )}
       </div>
     </div>

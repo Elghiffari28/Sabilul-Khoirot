@@ -28,7 +28,7 @@ export const getMe = async () => {
       credentials: "include",
     });
 
-    if (!response.ok) {
+    if (!response) {
       // console.log("Failed to fetch user. Status:", response.status);
       return null;
     }

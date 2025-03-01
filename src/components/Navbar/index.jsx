@@ -10,10 +10,12 @@ import Link from "next/link";
 import { SignIn, SignOut } from "@phosphor-icons/react";
 import { UseUser } from "@/context/UserContext";
 import { useToast } from "@/hooks/use-toast";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Navbar = () => {
   const { user, setUser } = UseUser("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
@@ -228,12 +230,47 @@ const Navbar = () => {
               >
                 Beranda
               </Link>
-              <Link
-                href="/guru"
-                className="block rounded-md px-3 py-2 text-base font-medium text-dark hover:bg-gray-700 hover:text-white"
-              >
-                Guru
-              </Link>
+              <div>
+                <button
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="flex justify-between w-full rounded-md px-3 py-2 text-base font-medium text-dark hover:bg-gray-700 hover:text-white"
+                >
+                  Profile RA
+                  {isProfileOpen ? (
+                    <ChevronUp size={18} />
+                  ) : (
+                    <ChevronDown size={18} />
+                  )}
+                </button>
+                {isProfileOpen && (
+                  <div className="ml-4 space-y-1">
+                    <Link
+                      href="/profile-ra/visi-misi"
+                      className="block rounded-md px-3 py-2 text-sm font-medium text-dark hover:bg-gray-700 hover:text-white"
+                    >
+                      Visi & Misi
+                    </Link>
+                    <Link
+                      href="/profile-ra/komite"
+                      className="block rounded-md px-3 py-2 text-sm font-medium text-dark hover:bg-gray-700 hover:text-white"
+                    >
+                      Komite
+                    </Link>
+                    <Link
+                      href="/profile-ra/logo"
+                      className="block rounded-md px-3 py-2 text-sm font-medium text-dark hover:bg-gray-700 hover:text-white"
+                    >
+                      Logo RA
+                    </Link>
+                    <Link
+                      href="/profile-ra/logo"
+                      className="block rounded-md px-3 py-2 text-sm font-medium text-dark hover:bg-gray-700 hover:text-white"
+                    >
+                      Sejarah RA
+                    </Link>
+                  </div>
+                )}
+              </div>
               <Link
                 href="/karya"
                 className="block rounded-md px-3 py-2 text-base font-medium text-dark hover:bg-gray-700 hover:text-white"
@@ -247,7 +284,7 @@ const Navbar = () => {
                 Berita
               </Link>
               <Link
-                href="/contact"
+                href="/kontak"
                 className="block rounded-md px-3 py-2 text-base font-medium text-dark hover:bg-gray-700 hover:text-white"
               >
                 Kontak
