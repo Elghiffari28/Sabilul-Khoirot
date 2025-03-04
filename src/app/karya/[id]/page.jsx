@@ -8,13 +8,13 @@ import { useToast } from "@/hooks/use-toast";
 import Comment from "@/components/Comment";
 import { FormatTanggal } from "@/utils/FormatTanggal";
 import Header from "@/components/Header";
+import { IMAGE_URL } from "@/utils/config";
 
 const page = () => {
   const { user, setUser } = UseUser();
   const [karya, setKarya] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
-  const imageURL = process.env.NEXT_PUBLIC_IMAGE_URL;
   const { toast } = useToast();
 
   if (!params?.id) return;
@@ -45,11 +45,11 @@ const page = () => {
       ) : (
         <div>
           <Header judul={`Karya ${karya.author}`} />
-          <div className="flex flex-col md:flex-row p-12 bg-bg_third my-12 mx-12 rounded-md">
-            <div className="w-full md:w-1/2 px-0 md:px-4 flex justify-center items-center">
+          <div className="flex flex-col md:flex-row p-4 lg:p-12 bg-bg_third m-2 md:m-8 lg:m-12 rounded-md">
+            <div className="w-full md:w-1/2 px-0 md:px-4 flex justify-center items-center mb-4">
               <Image
                 src={
-                  karya.file ? `${imageURL}/${karya.file}` : "/placeholder.jpg"
+                  karya.file ? `${IMAGE_URL}/${karya.file}` : "/placeholder.jpg"
                 }
                 width={100}
                 height={100}

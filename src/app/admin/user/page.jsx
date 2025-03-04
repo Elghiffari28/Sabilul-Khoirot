@@ -1,11 +1,13 @@
 "use client";
-import { getAllUser } from "@/lib/user";
+import { deleteUser, getAllUser } from "@/lib/user";
 import React, { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 
 const page = () => {
   const [dataUser, setDataUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -22,11 +24,22 @@ const page = () => {
     fetchData();
   }, []);
 
-  const handleDelete = (id) => {
-    console.log(id);
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus komentar ini?"
+    );
+    if (!confirmed) return;
+    try {
+      await deleteUser(id);
+      toast({
+        description: "User berhasil dihapus",
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  console.log(dataUser);
+  // console.log(dataUser);
   if (!dataUser) {
     return <p>Forbidden</p>;
   }

@@ -60,7 +60,7 @@ const Navigation = () => {
               Logo RA
             </Link>
             <Link
-              href="/profile-ra/logo"
+              href="/profile-ra/sejarah"
               className="block rounded-md px-4 py-2 text-sm font-medium text-dark  hover:bg-bg_primary"
             >
               Sejarah RA

@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllKarya } from "@/lib/karya";
 import Header from "@/components/Header";
+import { IMAGE_URL } from "@/utils/config";
 
 const page = () => {
   const [karya, setKarya] = useState({});
-  const imageURL = process.env.NEXT_PUBLIC_IMAGE_URL;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,7 +45,7 @@ const page = () => {
               className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
             >
               <Image
-                src={`${imageURL}/${item.file}`}
+                src={`${IMAGE_URL}/${item.file}`}
                 width={100}
                 height={100}
                 alt="Gambar Karya"

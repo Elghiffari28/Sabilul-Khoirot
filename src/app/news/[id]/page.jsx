@@ -6,13 +6,13 @@ import Image from "next/image";
 import Carousel from "@/components/CarouselBerita";
 import { FormatTanggal } from "@/utils/FormatTanggal";
 import Link from "next/link";
+import { IMAGE_URL } from "@/utils/config";
 
 const page = () => {
   const params = useParams();
   const [berita, setBerita] = useState({});
   const [topBerita, setTopBerita] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const imageURL = process.env.NEXT_PUBLIC_IMAGE_URL;
   const fetchData = async () => {
     if (!params?.id) return;
     setIsLoading(true);
@@ -107,7 +107,7 @@ const page = () => {
                 className="group relative w-full h-44 overflow-hidden rounded-sm border-2 border-black"
               >
                 <Image
-                  src={`${imageURL}/${item.file[0]}`}
+                  src={`${IMAGE_URL}/${item.file[0]}`}
                   alt={item.judul}
                   width={400} // Atur ukuran sesuai kebutuhan
                   height={320} // Atur ukuran sesuai kebutuhan

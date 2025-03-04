@@ -4,6 +4,7 @@ import { createKomentar, deleteKomentar } from "@/lib/komentar";
 import { useToast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { FormatTanggal } from "@/utils/FormatTanggal";
+import { Trash2 } from "lucide-react";
 
 const Comment = ({ karya, fetchData }) => {
   const { user, setUser } = UseUser();
@@ -63,7 +64,7 @@ const Comment = ({ karya, fetchData }) => {
   };
   return (
     <div>
-      {user && (
+      {user?.role === "guru" ? (
         <form
           className="mb-6 mt-12 mx-5 md:mx-12 lg:mx-32 "
           onSubmit={handleCommentSubmmit}
@@ -89,7 +90,7 @@ const Comment = ({ karya, fetchData }) => {
             Kirim
           </button>
         </form>
-      )}
+      ) : null}
       <div>
         <h1 className="text-center font-semibold text-xl">Komentar</h1>
         {comments.length > 0 ? (
@@ -99,9 +100,12 @@ const Comment = ({ karya, fetchData }) => {
               key={komen.id || index}
             >
               {komen?.name === user?.name ? (
-                <div className="absolute top-0 right-0">
-                  <button onClick={() => handleDeleteComment(komen.id)}>
-                    S
+                <div className="absolute top-2 right-2">
+                  <button
+                    onClick={() => handleDeleteComment(komen.id)}
+                    className="text-3xl"
+                  >
+                    <Trash2 />
                   </button>
                 </div>
               ) : null}

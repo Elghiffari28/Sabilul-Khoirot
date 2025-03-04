@@ -12,7 +12,7 @@ const nextConfig = {
         hostname: "tailwindui.com",
       },
       {
-        hostname: "images.unsplash.com",
+        hostname: "https://flowbite.s3.amazonaws.com",
       },
     ],
   },

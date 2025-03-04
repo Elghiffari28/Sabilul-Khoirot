@@ -5,11 +5,11 @@ import Image from "next/image";
 import { UseUser } from "@/context/UserContext";
 import { getAllBerita } from "@/lib/berita";
 import Header from "@/components/Header";
+import { IMAGE_URL } from "@/utils/config";
 
 const Page = () => {
   const { user, setUser } = UseUser();
   const [berita, setBerita] = useState({});
-  const imageURL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +49,7 @@ const Page = () => {
               className="max-w-sm h-[500px] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
             >
               <Image
-                src={`${imageURL}/${item.file[0]}`}
+                src={`${IMAGE_URL}/${item.file[0]}`}
                 width={100}
                 height={100}
                 alt="Gambar Karya"

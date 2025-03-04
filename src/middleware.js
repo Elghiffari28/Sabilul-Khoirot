@@ -8,7 +8,7 @@ export async function middleware(req) {
   // console.log("Request URL:", req.url);
   // console.log("Session Token:", session); // Log isi session token
 
-  console.log("objek", role.value);
+  // console.log("objek", role.value);
   // Redirect jika tidak ada session
   if (!session) {
     console.log("No session token found. Redirecting to login.");

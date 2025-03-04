@@ -6,9 +6,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
+import { IMAGE_URL } from "@/utils/config";
 
 const Carousel = ({ images, judul }) => {
-  const imageURL = process.env.NEXT_PUBLIC_IMAGE_URL;
   console.log("ini carousel", images);
   return (
     <div>
@@ -38,7 +38,7 @@ const Carousel = ({ images, judul }) => {
               <SwiperSlide key={index}>
                 <figure className="p-2 bg-background w-full mb-10">
                   <Image
-                    src={`${imageURL}/${src}`}
+                    src={`${IMAGE_URL}/${src}`}
                     alt={`Slide ${index + 1}`}
                     width={100}
                     height={100}

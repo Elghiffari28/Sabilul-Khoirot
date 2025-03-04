@@ -32,7 +32,7 @@ const Sidebar = () => {
         return;
       }
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       if (data) {
         toast({
           description: "Logout Berhasil",

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { getMe } from "@/lib/api";
 import { UseUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
+import Hero from "@/components/Hero";
+import GetTopBerita from "@/components/GetTopBerita";
 
 const page = () => {
   const { user, setUser } = UseUser();
@@ -28,6 +30,8 @@ const page = () => {
 
   return (
     <div>
+      <Hero />
+      <GetTopBerita />
       {user ? (
         <div>
           <h1>ini halaman dashboard</h1>
