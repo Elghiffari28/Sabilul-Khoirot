@@ -23,6 +23,7 @@ const page = () => {
     const previews = selectedFiles.map((file) => URL.createObjectURL(file));
     setPreview(previews);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

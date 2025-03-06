@@ -1,72 +1,247 @@
 "use client";
 import { UseUser } from "@/context/UserContext";
 import Image from "next/image";
-import React, { useState } from "react";
-import { IMAGE_URL } from "@/utils/config";
+import React, { useState, useEffect } from "react";
+import { IMAGE_URL, InputField } from "@/utils/config";
 import ModalForm from "@/components/ModalForm";
 import { useToast } from "@/hooks/use-toast";
+import { updateGuru } from "@/lib/guru";
+import Header from "@/components/Header";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import FotoModal from "@/components/FotoModal";
+import { FormatTanggal } from "@/utils/FormatTanggal";
 
 const page = () => {
   const { user, setUser } = UseUser();
   const guru = user?.guru;
-  console.log("ini data guru", guru);
-  console.log(user);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFotoModalOpen, setIsFotoModalOpen] = useState(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [preview, setPreview] = useState("");
+  const [oldPreview, setOldPreview] = useState("");
+  const [file, setFile] = useState([]);
   const { toast } = useToast();
+  console.log("ini data user updated", user);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    toast({
-      description: "Form Submitted",
-    });
-    setTimeout(() => {
-      setIsModalOpen(false);
-    }, 2000);
+  // console.log("ini data file", file);
+  // console.log("ini guru id", guru?.uuid);
+
+  const handleAccountChange = () => {
+    console.log("object");
   };
+
   return (
     <div>
-      <div className="flex min-h-screen items-center justify-center">
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg"
-        >
-          Open Form
-        </button>
+      <Header judul={"Profil Guru"} />
+      {user && (
+        <div className="grid grid-cols-2 px-4 md:px-8 lg:px-12 gap-4">
+          {/* Section Foto Profil */}
+          <div className="flex flex-col border-2 rounded-lg shadow-lg bg-bg_secondary col-span-2 md:col-span-1 w-full overflow-hidden">
+            <div className="py-4 px-6 border-b">
+              <h1 className="text-2xl font-bold text-gray-800">Foto Profil</h1>
+            </div>
+            <div className="flex flex-grow items-center p-6">
+              <div className="w-24 h-24 border-2 rounded-md bg-bg_primary overflow-hidden">
+                <Image
+                  src={`${IMAGE_URL}/${user.guru.foto}`}
+                  width={96}
+                  height={96}
+                  alt={`foto ${user.name}`}
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              <div className="ml-6">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  {user.name}
+                </h2>
+                <p className="text-gray-600">{user?.guru?.jabatan}</p>
+              </div>
+            </div>
+            <div className="px-6 pb-6 w-1/2 md:w-1/3 mt-auto">
+              <button
+                onClick={() => setIsFotoModalOpen(true)}
+                className="w-full py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+              >
+                Edit Foto
+              </button>
+            </div>
 
-        <ModalForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <h2 className="text-lg font-semibold mb-4">Form Modal</h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="border p-2 rounded-lg"
-              required
-            />
-            <button
-              type="submit"
-              className="bg-green-500 text-white p-2 rounded-lg"
-            >
-              Submit
-            </button>
-          </form>
-        </ModalForm>
-      </div>
-      {/* Profile Section */}
-      <div id="Photo-Profile">
-        <h1>Foto Profil</h1>
-        <div className="flex">
-          <div>
-            <Image
-              src={`${IMAGE_URL}/${guru?.foto}`}
-              width={100}
-              height={100}
-              alt="Foto Guru"
+            <FotoModal
+              isOpen={isFotoModalOpen}
+              onClose={() => setIsFotoModalOpen(false)}
+              guru={guru}
             />
           </div>
+
+          {/* Section Pengaturan Akun */}
+          <div className="flex flex-col border-2 rounded-lg shadow-lg bg-bg_secondary col-span-2 md:col-span-1 w-full overflow-hidden">
+            <div className="py-4 px-6 border-b">
+              <h1 className="text-2xl font-bold text-gray-800">
+                Pengaturan Akun
+              </h1>
+            </div>
+            <div className="p-6">
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <p className="text-gray-700 mb-2">
+                  <strong>Nama:</strong> {user.name}
+                </p>
+                <p className="text-gray-700 mb-2">
+                  <strong>Email:</strong> {user.email}
+                </p>
+                <p className="text-gray-700 mb-2">
+                  <strong>Role:</strong> {user.role}
+                </p>
+              </div>
+            </div>
+            <div className="px-6 pb-6 w-1/2 md:w-1/3">
+              <button
+                onClick={() => setIsAccountModalOpen(true)}
+                className="w-full py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+              >
+                Ubah Data
+              </button>
+            </div>
+
+            <ModalForm
+              isOpen={isAccountModalOpen}
+              onClose={() => setIsAccountModalOpen(false)}
+            >
+              <h2 className="text-lg font-semibold mb-4">Ganti Foto Profil</h2>
+
+              <form className="flex flex-col gap-4">
+                <div>
+                  <InputField
+                    label={"email"}
+                    id={"email"}
+                    type="email"
+                    value={user.email}
+                    onChange={handleAccountChange}
+                  />
+                  <InputField
+                    label={"password"}
+                    id={"password"}
+                    type="password"
+                    value={"............."}
+                    onChange={handleAccountChange}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-green-500 text-white p-2 rounded-lg"
+                >
+                  Submit
+                </button>
+              </form>
+            </ModalForm>
+          </div>
+
+          {/* Section Informasi Pribadi */}
+          <div className="flex flex-col border-2 rounded-lg shadow-lg bg-bg_secondary col-span-2 w-full overflow-hidden">
+            <div className="py-4 px-6 border-b">
+              <h1 className="text-2xl font-bold text-gray-800">
+                Informasi Pribadi
+              </h1>
+            </div>
+            <div className="p-6 border-b-2">
+              <div className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row gap-4">
+                <div className="w-full">
+                  <p className="text-gray-700 mb-2">
+                    <strong>Nama:</strong> {user.name}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>Jabatan:</strong> {guru?.jabatan}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>Gender:</strong> {guru.gender}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>NIK:</strong> {guru.nik}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>Agama:</strong> {guru.agama}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>No Handphone:</strong> {guru.nohp}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>Tempat Lahir:</strong> {guru.tempat_lahir}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>Tanggal Lahir:</strong>{" "}
+                    {FormatTanggal(guru.tanggal_lahir)}
+                  </p>
+                </div>
+                <div className="w-full">
+                  <p className="text-gray-700 mb-2">
+                    <strong>NRG:</strong> {guru.nrg}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>No SK Awal:</strong> {guru.no_sk_awal}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>Tahun Masuk:</strong> {guru.tahun_masuk}
+                  </p>
+                  <p className="text-gray-700 mb-2">
+                    <strong>Alamat:</strong> {guru.alamat}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="px-6 py-6 w-1/2 md:w-1/3 mt-auto ">
+              <button
+                onClick={() => setIsFormModalOpen(true)}
+                className="w-full py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+              >
+                Ubah Data
+              </button>
+            </div>
+
+            <ModalForm
+              isOpen={isFormModalOpen}
+              onClose={() => setIsFormModalOpen(false)}
+            >
+              <h2 className="text-lg font-semibold mb-4">Ganti Foto Profil</h2>
+              <form className="p-4">
+                <div className="grid gap-4 mb-4 grid-cols-2">
+                  <div className="col-span-2">
+                    <InputField
+                      label={"nama"}
+                      id={"nama"}
+                      value={user?.guru?.name}
+                      required
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <InputField label={"nrg"} id={"nrg"} required />
+                  </div>
+                  <div className="col-span-2">
+                    <InputField
+                      label={"tempatLahir"}
+                      id={"tempatLahir"}
+                      required
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <InputField
+                      label={"tanggalLahir"}
+                      id={"tanggalLahir"}
+                      type="date"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="bg-green-500 text-white p-2 rounded-lg"
+                >
+                  Submit
+                </button>
+              </form>
+            </ModalForm>
+          </div>
         </div>
-      </div>
-      <h1>ini adalah halaman profile user</h1>
-      <p>{user?.guru?.nrg}</p>
+      )}
     </div>
   );
 };

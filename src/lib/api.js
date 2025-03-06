@@ -66,6 +66,11 @@ export const apiRequest = async (endpoint, method = "GET", body = null) => {
     // console.log("ini adalah response", response.text);
     if (!response.ok) {
       console.log(`Error ${method} ${endpoint}: ${response.statusText}`);
+      throw {
+        status: response.status,
+        message: errorData.message || response.statusText,
+        data: errorData,
+      };
     }
     // console.log("Response Status:", response.status);
     // console.log("Response Headers:", response.headers);
@@ -74,6 +79,7 @@ export const apiRequest = async (endpoint, method = "GET", body = null) => {
   } catch (error) {
     console.error("API Error:", error);
     // console.log(error);
-    return null;
+    throw error;
+    // return null;
   }
 };
