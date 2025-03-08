@@ -10,7 +10,7 @@ import {
   SignOut,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { UseUser } from "@/context/UserContext";
 import { useToast } from "@/hooks/use-toast";
@@ -20,7 +20,30 @@ const Sidebar = () => {
   const router = useRouter();
   const ADMIN_PREFIX = "/admin";
   const { toast } = useToast();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isSidebarOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSidebarOpen]);
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:3001/logout", {
@@ -51,11 +74,53 @@ const Sidebar = () => {
 
   return (
     <div className="">
+      <button
+        onClick={toggleSidebar}
+        className="sm:hidden p-2 text-gray-900 focus:outline-none"
+      >
+        <svg
+          className="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
       <aside
         id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        ref={sidebarRef}
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
         aria-label="Sidebar"
       >
+        <button
+          onClick={toggleSidebar}
+          className="absolute top-2 right-2 p-2 text-gray-900 focus:outline-none"
+        >
+          {/* Ikon tutup (x) */}
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 flex flex-col justify-between">
           <div>
             <ul className="space-y-2 font-medium">

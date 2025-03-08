@@ -31,7 +31,7 @@ const FotoModal = ({ isOpen, onClose, guru }) => {
     formData.append("foto", file);
     try {
       const data = await updateGuru(guru?.uuid, formData);
-      console.log("ini data update", data);
+      // console.log("ini data update", data);
 
       toast({
         description: "Foto berhasil diubah",
@@ -43,6 +43,7 @@ const FotoModal = ({ isOpen, onClose, guru }) => {
           foto: data.payload?.foto, // Pastikan ini sesuai dengan struktur response dari API
         },
       }));
+      onClose();
     } catch (error) {
       // console.error(error);
       toast({
@@ -51,9 +52,9 @@ const FotoModal = ({ isOpen, onClose, guru }) => {
       });
     }
 
-    setTimeout(() => {
-      setIsFotoModalOpen(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   onClose;
+    // }, 2000);
   };
   return (
     <div>

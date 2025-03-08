@@ -65,11 +65,11 @@ export const apiRequest = async (endpoint, method = "GET", body = null) => {
     const response = await fetch(`${BASE_URL}/${endpoint}`, options);
     // console.log("ini adalah response", response.text);
     if (!response.ok) {
-      console.log(`Error ${method} ${endpoint}: ${response.statusText}`);
+      console.log(`Error ${method} ${endpoint}: ${response}`);
       throw {
         status: response.status,
-        message: errorData.message || response.statusText,
-        data: errorData,
+        // message: errorData?.message || response.statusText,
+        data: response,
       };
     }
     // console.log("Response Status:", response.status);

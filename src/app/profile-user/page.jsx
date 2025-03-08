@@ -10,6 +10,8 @@ import Header from "@/components/Header";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import FotoModal from "@/components/FotoModal";
 import { FormatTanggal } from "@/utils/FormatTanggal";
+import DataUserModal from "@/components/DataUserModal";
+import AccountUserModal from "@/components/AccountUserModal";
 
 const page = () => {
   const { user, setUser } = UseUser();
@@ -21,14 +23,9 @@ const page = () => {
   const [oldPreview, setOldPreview] = useState("");
   const [file, setFile] = useState([]);
   const { toast } = useToast();
-  console.log("ini data user updated", user);
-
+  // console.log("ini data user updated", user);
   // console.log("ini data file", file);
   // console.log("ini guru id", guru?.uuid);
-
-  const handleAccountChange = () => {
-    console.log("object");
-  };
 
   return (
     <div>
@@ -102,37 +99,11 @@ const page = () => {
               </button>
             </div>
 
-            <ModalForm
+            <AccountUserModal
               isOpen={isAccountModalOpen}
               onClose={() => setIsAccountModalOpen(false)}
-            >
-              <h2 className="text-lg font-semibold mb-4">Ganti Foto Profil</h2>
-
-              <form className="flex flex-col gap-4">
-                <div>
-                  <InputField
-                    label={"email"}
-                    id={"email"}
-                    type="email"
-                    value={user.email}
-                    onChange={handleAccountChange}
-                  />
-                  <InputField
-                    label={"password"}
-                    id={"password"}
-                    type="password"
-                    value={"............."}
-                    onChange={handleAccountChange}
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="bg-green-500 text-white p-2 rounded-lg"
-                >
-                  Submit
-                </button>
-              </form>
-            </ModalForm>
+              user={user}
+            />
           </div>
 
           {/* Section Informasi Pribadi */}
@@ -196,49 +167,11 @@ const page = () => {
               </button>
             </div>
 
-            <ModalForm
+            <DataUserModal
               isOpen={isFormModalOpen}
               onClose={() => setIsFormModalOpen(false)}
-            >
-              <h2 className="text-lg font-semibold mb-4">Ganti Foto Profil</h2>
-              <form className="p-4">
-                <div className="grid gap-4 mb-4 grid-cols-2">
-                  <div className="col-span-2">
-                    <InputField
-                      label={"nama"}
-                      id={"nama"}
-                      value={user?.guru?.name}
-                      required
-                    />
-                  </div>
-                  <div className="col-span-2">
-                    <InputField label={"nrg"} id={"nrg"} required />
-                  </div>
-                  <div className="col-span-2">
-                    <InputField
-                      label={"tempatLahir"}
-                      id={"tempatLahir"}
-                      required
-                    />
-                  </div>
-                  <div className="col-span-2">
-                    <InputField
-                      label={"tanggalLahir"}
-                      id={"tanggalLahir"}
-                      type="date"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="bg-green-500 text-white p-2 rounded-lg"
-                >
-                  Submit
-                </button>
-              </form>
-            </ModalForm>
+              guru={guru}
+            />
           </div>
         </div>
       )}
