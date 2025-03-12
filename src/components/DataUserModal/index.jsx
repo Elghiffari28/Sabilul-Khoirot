@@ -12,6 +12,7 @@ const DataUserModal = ({ isOpen, onClose, guru }) => {
     nrg: "",
     agama: "",
     nohp: "",
+    gender: "",
     tempat_lahir: "",
     tanggal_lahir: "",
     alamat: "",
@@ -26,6 +27,7 @@ const DataUserModal = ({ isOpen, onClose, guru }) => {
         nrg: guru.nrg || "",
         agama: guru.agama || "",
         nohp: guru.nohp || "",
+        gender: guru.gender || "",
         tempat_lahir: guru.tempat_lahir || "",
         tanggal_lahir: guru.tanggal_lahir || "",
         alamat: guru.alamat || "",
@@ -56,6 +58,7 @@ const DataUserModal = ({ isOpen, onClose, guru }) => {
           nrg: data.payload?.nrg,
           agama: data.payload?.agama,
           nohp: data.payload?.nohp,
+          gender: data.payload?.gender,
           tempat_lahir: data.payload?.tempat_lahir,
           tanggal_lahir: data.payload?.tanggal_lahir,
           alamat: data.payload?.alamat,
@@ -110,10 +113,30 @@ const DataUserModal = ({ isOpen, onClose, guru }) => {
             </div>
             <div className="col-span-2 md:col-span-1">
               <InputField
+                label={"jabatan"}
+                id={"jabatan"}
+                name="jabatan"
+                value={formData.jabatan}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-span-2 md:col-span-1">
+              <InputField
                 label={"nohp"}
                 id={"nohp"}
                 name="nohp"
                 value={formData.nohp}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-span-2 md:col-span-1">
+              <InputField
+                label={"gender"}
+                id={"gender"}
+                name="gender"
+                value={formData.gender}
                 onChange={handleChange}
                 required
               />

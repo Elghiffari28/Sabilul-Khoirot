@@ -46,16 +46,18 @@ const Page = () => {
           berita?.payload?.map((item) => (
             <div
               key={item.uuid}
-              className="max-w-sm h-[500px] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+              className="max-w-sm  bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
             >
-              <Image
-                src={`${IMAGE_URL}/${item.file[0]}`}
-                width={100}
-                height={100}
-                alt="Gambar Karya"
-                className="w-full h-80 object-fill"
-                priority
-              />
+              <Link href={`/news/${item.uuid}`}>
+                <Image
+                  src={`${IMAGE_URL}/${item.file[0]}`}
+                  width={100}
+                  height={100}
+                  alt="Gambar  Karya"
+                  className="w-full h-80 object-cover hover:scale-105 hover:brightness-75"
+                  priority
+                />
+              </Link>
 
               <div className="p-5">
                 <Link href={`/news/${item.uuid}`}>

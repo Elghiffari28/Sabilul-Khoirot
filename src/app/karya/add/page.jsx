@@ -126,7 +126,6 @@ const page = () => {
               name="image"
               accept="image/*"
               className="w-full"
-              multiple
               onChange={handleFileChange}
             />
           </div>

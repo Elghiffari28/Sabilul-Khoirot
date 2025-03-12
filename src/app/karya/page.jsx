@@ -44,15 +44,16 @@ const page = () => {
               key={item.uuid}
               className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
             >
-              <Image
-                src={`${IMAGE_URL}/${item.file}`}
-                width={100}
-                height={100}
-                alt="Gambar Karya"
-                className="w-full h-80 object-fill"
-                priority
-              />
-
+              <Link href={`/karya/${item.uuid}`}>
+                <Image
+                  src={`${IMAGE_URL}/${item.file}`}
+                  width={100}
+                  height={100}
+                  alt="Gambar Karya"
+                  className="w-full h-80 object-fill hover:scale-105 hover:brightness-75"
+                  priority
+                />
+              </Link>
               <div className="p-5">
                 <Link href={`/karya/${item.uuid}`}>
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

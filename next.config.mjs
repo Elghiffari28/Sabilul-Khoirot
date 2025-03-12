@@ -14,6 +14,9 @@ const nextConfig = {
       {
         hostname: "https://flowbite.s3.amazonaws.com",
       },
+      {
+        hostname: "th-thumbnailer.cdn-si-edu.com",
+      },
     ],
   },
 };

@@ -4,11 +4,13 @@ import { useToast } from "@/hooks/use-toast";
 import ModalForm from "../ModalForm";
 import Image from "next/image";
 import { IMAGE_URL } from "@/utils/config";
+import { updateGuru } from "@/lib/guru";
 
 const FotoModal = ({ isOpen, onClose, guru }) => {
   const { user, setUser } = UseUser();
   const [preview, setPreview] = useState("");
   const [oldPreview, setOldPreview] = useState("");
+  const [file, setFile] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const FotoModal = ({ isOpen, onClose, guru }) => {
     const previews = selectedFiles.map((file) => URL.createObjectURL(file));
     setPreview(previews);
   };
+  console.log("ini file uploaded", file);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -45,7 +48,7 @@ const FotoModal = ({ isOpen, onClose, guru }) => {
       }));
       onClose();
     } catch (error) {
-      // console.error(error);
+      console.error(error);
       toast({
         variant: "destructive",
         description: "Foto Gagal diubah",
@@ -63,7 +66,7 @@ const FotoModal = ({ isOpen, onClose, guru }) => {
         <div>
           <div>
             <Image
-              src={preview[0] || oldPreview}
+              src={preview[0] || oldPreview || "/placeholder.jpg"}
               alt="preview"
               width={80}
               height={80}

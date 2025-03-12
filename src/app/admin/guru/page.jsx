@@ -4,7 +4,11 @@ import { getAllGuru, getGuruById } from "@/lib/guru";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import Header from "@/components/Header";
-import { PencilIcon } from "lucide-react";
+import { PencilIcon, Plus } from "lucide-react";
+import DataGuruModal from "@/components/DataGuruModal";
+import { deleteGuru } from "@/lib/guru";
+import Image from "next/image";
+import { IMAGE_URL } from "@/utils/config";
 
 const page = () => {
   const [dataGuru, setDataGuru] = useState({});
@@ -67,15 +71,31 @@ const page = () => {
       ) : (
         <div>
           <Header judul={"Data Guru"} />
+
+          <div className="p-2 rounded-lg shadow-lg bg-bg_secondary flex gap-2 w-44 mb-4">
+            <button className="" onClick={() => setIsModalOpen(true)}>
+              Tambah Guru
+            </button>
+            <Plus />
+          </div>
           {/* Tampilkan sebagai tabel di layar besar */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th className="px-6 py-3">Nama</th>
-                  <th className="px-6 py-3">NIP</th>
-                  <th className="px-6 py-3">Mata Pelajaran</th>
-                  <th className="px-6 py-3">Email</th>
+                  <th className="px-6 py-3">NRG</th>
+                  <th className="px-6 py-3">NIK</th>
+                  <th className="px-6 py-3">No SK Awal</th>
+                  <th className="px-6 py-3">Gender</th>
+                  <th className="px-6 py-3">Agama</th>
+                  <th className="px-6 py-3">No HP</th>
+                  <th className="px-6 py-3">Tahun Masuk</th>
+                  <th className="px-6 py-3">Tempat Lahir</th>
+                  <th className="px-6 py-3">Tanggal Lahir</th>
+                  <th className="px-6 py-3">Alamat</th>
+                  <th className="px-6 py-3">Jabatan</th>
+                  <th className="px-6 py-3">Foto</th>
                   <th className="px-6 py-3">Aksi</th>
                 </tr>
               </thead>
@@ -85,17 +105,41 @@ const page = () => {
                     key={index}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                   >
-                    <td className="px-6 py-4">{guru.nama}</td>
-                    <td className="px-6 py-4">{guru.nip}</td>
-                    <td className="px-6 py-4">{guru.mapel}</td>
-                    <td className="px-6 py-4">{guru.email}</td>
+                    <td className="px-6 py-4">{guru.name}</td>
+                    <td className="px-6 py-4">{guru.nrg}</td>
+                    <td className="px-6 py-4">{guru.nik}</td>
+                    <td className="px-6 py-4">{guru.no_sk_awal}</td>
+                    <td className="px-6 py-4">{guru.gender}</td>
+                    <td className="px-6 py-4">{guru.agama}</td>
+                    <td className="px-6 py-4">{guru.nohp}</td>
+                    <td className="px-6 py-4">{guru.tahun_masuk}</td>
+                    <td className="px-6 py-4">{guru.tempat_lahir}</td>
+                    <td className="px-6 py-4">{guru.tanggal_lahir}</td>
+                    <td className="px-6 py-4">{guru.alamat}</td>
+                    <td className="px-6 py-4">{guru.jabatan}</td>
                     <td className="px-6 py-4">
-                      <button className="bg-green-500 text-white px-3 py-1 rounded">
-                        Edit
-                      </button>
-                      <button className="bg-red-500 text-white px-3 py-1 rounded ml-2">
-                        Hapus
-                      </button>
+                      <Image
+                        src={`${IMAGE_URL}/${guru.foto}`}
+                        width={100}
+                        height={100}
+                        alt={`Foto ${guru.name}`}
+                      />
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <div className="flex gap-2 justify-center items-center">
+                        <button
+                          className="bg-green-500 text-white px-3 py-1 rounded"
+                          onClick={() => handleUpdate(guru.uuid)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="bg-red-500 text-white px-3 py-1 rounded ml-2"
+                          onClick={() => handleDelete(guru.uuid)}
+                        >
+                          Hapus
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -164,6 +208,11 @@ const page = () => {
               </div>
             ))}
           </div>
+          <DataGuruModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            guru={selectedGuru?.payload}
+          />
         </div>
       )}
     </div>

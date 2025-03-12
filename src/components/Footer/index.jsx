@@ -2,6 +2,13 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  FacebookLogo,
+  InstagramLogo,
+  TiktokLogo,
+  XLogo,
+} from "@phosphor-icons/react";
+import Image from "next/image";
 
 const Footer = () => {
   const pathname = usePathname();
@@ -17,36 +24,40 @@ const Footer = () => {
           <div className="flex flex-wrap text-left lg:text-left">
             <div className="w-full lg:w-6/12 px-4">
               <h4 className="text-3xl fonat-semibold text-blueGray-700">
-                Let's keep in touch!
+                Hubungi Kami!
               </h4>
               <h5 className="text-lg mt-0 mb-2 text-blueGray-600">
-                Find us on any of these platforms, we respond 1-2 business days.
+                Temukan kami di platform mana pun, kami akan merespons dalam 1-2
+                hari kerja.
               </h5>
-              <div className="mt-6 lg:mb-0 mb-6">
-                <button
-                  className="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                  type="button"
+              <div className="mt-6 lg:mb-0 mb-6 flex gap-4">
+                <Link
+                  href="/"
+                  className="bg-white text-lightBlue-400 shadow-lg w-12 h-12 flex items-center justify-center rounded-full outline-none focus:outline-none overflow-hidden transition-all duration-300 hover:bg-gray-200"
                 >
-                  <i className="fab fa-twitter"></i>
-                </button>
-                <button
-                  className="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                  type="button"
+                  <FacebookLogo size={32} />
+                </Link>
+
+                <Link
+                  href="/"
+                  className="bg-white text-black shadow-lg w-12 h-12 flex items-center justify-center rounded-full outline-none focus:outline-none overflow-hidden transition-all duration-300 hover:bg-gray-200"
                 >
-                  <i className="fab fa-facebook-square"></i>
-                </button>
-                <button
-                  className="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                  type="button"
+                  <TiktokLogo size={32} />
+                </Link>
+
+                <Link
+                  href="/"
+                  className="bg-white text-pink-500 shadow-lg w-12 h-12 flex items-center justify-center rounded-full outline-none focus:outline-none overflow-hidden transition-all duration-300 hover:bg-gray-200"
                 >
-                  <i className="fab fa-dribbble"></i>
-                </button>
-                <button
-                  className="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                  type="button"
+                  <InstagramLogo size={32} />
+                </Link>
+
+                <Link
+                  href="/"
+                  className="bg-white text-blueGray-800 shadow-lg w-12 h-12 flex items-center justify-center rounded-full outline-none focus:outline-none overflow-hidden transition-all duration-300 hover:bg-gray-200"
                 >
-                  <i className="fab fa-github"></i>
-                </button>
+                  <XLogo size={32} />
+                </Link>
               </div>
             </div>
             <div className="w-full lg:w-6/12 px-4">
@@ -59,75 +70,76 @@ const Footer = () => {
                     <li>
                       <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                        href="/"
                       >
-                        About Us
+                        Beranda
                       </Link>
                     </li>
                     <li>
                       <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://blog.creative-tim.com?ref=njs-profile"
+                        href="/karya"
                       >
-                        Blog
+                        Karya
                       </Link>
                     </li>
                     <li>
                       <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.github.com/creativetimofficial?ref=njs-profile"
+                        href="/news"
                       >
-                        Github
+                        Berita
                       </Link>
                     </li>
                     <li>
                       <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.creative-tim.com/bootstrap-themes/free?ref=njs-profile"
+                        href="/kontak"
                       >
-                        Free Products
+                        Kontak
                       </Link>
                     </li>
                   </ul>
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
-                  <span className="block uppercase text-blueGray-500 text-sm font-semibold mb-2">
-                    Other Resources
-                  </span>
-                  <ul className="list-unstyled">
-                    <li>
-                      <Link
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-profile"
-                      >
-                        MIT License
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/terms?ref=njs-profile"
-                      >
-                        Terms &amp; Conditions
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/privacy?ref=njs-profile"
-                      >
-                        Privacy Policy
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/contact-us?ref=njs-profile"
-                      >
-                        Contact Us
-                      </Link>
-                    </li>
-                  </ul>
+                  <div>
+                    <h3 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                      Partnership
+                    </h3>
+                    <ul className="text-gray-400 dark:text-gray-500 space-y-4">
+                      <li className="flex items-center space-x-3">
+                        <Image
+                          src="/kemenag.png"
+                          alt="Logo Kemenag Majalengka"
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 object-contain"
+                        />
+                        <Link
+                          href="https://www.madrasahmajalengka.info/"
+                          className="text-black hover:underline"
+                        >
+                          Kemenag Majalengka
+                        </Link>
+                      </li>
+
+                      <li className="flex items-center space-x-3">
+                        <Image
+                          src="/UMMI.png"
+                          alt="Logo Ummi Foundation"
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 object-contain"
+                        />
+                        <Link
+                          href="https://ummifoundation.org/"
+                          className="text-black dark:text-gray-300 hover:underline"
+                        >
+                          Ummi Foundation
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -140,8 +152,8 @@ const Footer = () => {
                 <span className="text-blueGray-500"> RA Sabilul Khoirot</span>
                 <span> | Developed By </span>
                 <Link
-                  href="www.linkedin.com/in/elba-ghiffari-fitrasina"
-                  className="text-blueGray-500 hover:text-gray-800"
+                  href="https://www.linkedin.com/in/elba-ghiffari-fitrasina/"
+                  className="text-blueGray-500 hover:text-gray-800 hover:underline"
                 >
                   <span>Elghiffari</span>
                 </Link>

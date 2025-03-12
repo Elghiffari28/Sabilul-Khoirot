@@ -7,7 +7,6 @@ import { updateUser } from "@/lib/user";
 const ModalAdminUser = ({ isOpen, onClose, userData }) => {
   const [formData, setFormData] = useState({
     name: "",
-    role: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -19,7 +18,6 @@ const ModalAdminUser = ({ isOpen, onClose, userData }) => {
     if (user) {
       setFormData({
         name: user.name || "",
-        role: user.role || "",
         email: user.email || "",
         password: "",
         confirmPassword: "",
@@ -69,16 +67,6 @@ const ModalAdminUser = ({ isOpen, onClose, userData }) => {
                 value={formData.name ?? ""}
                 onChange={handleChange}
                 autoComplete="name"
-                required
-              />
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <InputField
-                label={"role"}
-                id={"role"}
-                name="role"
-                value={formData.role ?? ""}
-                onChange={handleChange}
                 required
               />
             </div>

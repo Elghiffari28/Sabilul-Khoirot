@@ -8,8 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { updateGuru } from "@/lib/guru";
 import Header from "@/components/Header";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import FotoModal from "@/components/FotoModal";
 import { FormatTanggal } from "@/utils/FormatTanggal";
+import FotoModal from "@/components/FotoModal";
 import DataUserModal from "@/components/DataUserModal";
 import AccountUserModal from "@/components/AccountUserModal";
 
@@ -19,10 +19,7 @@ const page = () => {
   const [isFotoModalOpen, setIsFotoModalOpen] = useState(false);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-  const [preview, setPreview] = useState("");
-  const [oldPreview, setOldPreview] = useState("");
-  const [file, setFile] = useState([]);
-  const { toast } = useToast();
+
   // console.log("ini data user updated", user);
   // console.log("ini data file", file);
   // console.log("ini guru id", guru?.uuid);
